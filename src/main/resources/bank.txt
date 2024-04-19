@@ -1,0 +1,17 @@
+Una famosa banca ci ha commissionato un software per la gestione dei
+conti bancari dei suoi clienti e delle transazioni da essi effettuate.
+Quando un cliente viene inserito nel sistema di esso ci interessa sapere il
+suo nome, cognome, data di nascita, il suo indirizzo e comune di residen-
+za, il codice fiscale, una email e un numero di telefono.
+Un cliente può aprire uno o più conti all’interno della banca stessa. Dei
+conti vogliamo conoscere l’id, il cliente o i clienti proprietari (esistono in-
+fatti i conti co-intestati), il costo annuale del conto, il quantitativo di dena-
+ro contenuto e la data di sottoscrizione.
+I clienti possono inoltre effettuare delle transazioni, cioè dei movimenti di
+denaro tra un conto e un altro (volendo anche entrambi dello stesso clien-
+te). Delle transazioni ci interessa memorizzare il quantitativo di denaro
+spostato e l’esatto momento in cui è avvenuta, oltre a un identificatore uni-
+voco.
+Infine un cliente può richiedere alla banca un finanziamento. Di questi ulti-
+mi vogliamo sapere l’ammontare totale, il tasso di interesse applicato e la
+durata del finanziamento
