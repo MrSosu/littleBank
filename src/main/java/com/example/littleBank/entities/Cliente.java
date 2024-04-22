@@ -34,7 +34,7 @@ public class Cliente {
     private String telefono;
     @Column(nullable = false, unique = true)
     private String email;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clientiConto")
     private List<Conto> contiUtente;
 
 
