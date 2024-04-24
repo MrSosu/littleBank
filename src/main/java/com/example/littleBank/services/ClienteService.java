@@ -7,6 +7,7 @@ import com.example.littleBank.repositories.ClienteRepository;
 import com.example.littleBank.request.CreateContoRequest;
 import com.example.littleBank.response.CreateContoResponse;
 import com.example.littleBank.response.GetClienteResponse;
+import com.example.littleBank.response.TransazioneResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +93,10 @@ public class ClienteService {
                 .id_clienti(createContoRequest.getClienti())
                 .build();
         return createContoResponse;
+    }
+
+    public List<TransazioneResponse> getAllTransazioniByContoId(Long idConto) {
+        return new ArrayList<TransazioneResponse>();
     }
 
     private GetClienteResponse convertDTO(Cliente cliente) {
