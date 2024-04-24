@@ -2,6 +2,7 @@ package com.example.littleBank.services;
 
 import com.example.littleBank.entities.Cliente;
 import com.example.littleBank.entities.Conto;
+import com.example.littleBank.exceptions.ClienteNotFoundException;
 import com.example.littleBank.repositories.ClienteRepository;
 import com.example.littleBank.request.CreateContoRequest;
 import com.example.littleBank.response.CreateContoResponse;
@@ -22,9 +23,9 @@ public class ClienteService {
     @Autowired
     private ContoService contoService;
 
-    public GetClienteResponse getClienteById(Long id) {
+    public GetClienteResponse getClienteById(Long id) throws ClienteNotFoundException {
         Optional<Cliente> optionalCliente = clienteRepository.findById(id);
-        if (optionalCliente.isEmpty()) throw new IllegalArgumentException("L'utente con id " + id + " non esiste!");
+        if (optionalCliente.isEmpty()) throw new ClienteNotFoundException();
         return convertDTO(optionalCliente.get());
     }
 
@@ -60,7 +61,13 @@ public class ClienteService {
     public CreateContoResponse createConto(CreateContoRequest createContoRequest) {
         if (createContoRequest.getClienti().isEmpty()) throw new IllegalArgumentException("deve esserci almeno un cliente intestatario del conto!");
         List<Cliente> clientiConto = new ArrayList<>();
-        createContoRequest.getClienti().forEach(id -> clientiConto.add(convertFromDTO(getClienteById(id))));
+        createContoRequest.getClienti().forEach(id -> {
+            try {
+                clientiConto.add(convertFromDTO(getClienteById(id)));
+            } catch (ClienteNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         Conto conto = Conto.builder()
                 .costo(createContoRequest.getCosto())
                 .cash(createContoRequest.getCash())
@@ -69,7 +76,12 @@ public class ClienteService {
                 .build();
         contoService.createConto(conto);
         createContoRequest.getClienti().forEach(id -> {
-            Cliente cliente = convertFromDTO(getClienteById(id));
+            Cliente cliente = null;
+            try {
+                cliente = convertFromDTO(getClienteById(id));
+            } catch (ClienteNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             cliente.getContiUtente().add(conto);
         });
         CreateContoResponse createContoResponse = CreateContoResponse.builder()

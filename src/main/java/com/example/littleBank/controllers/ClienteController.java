@@ -2,6 +2,7 @@ package com.example.littleBank.controllers;
 
 import com.example.littleBank.entities.Cliente;
 import com.example.littleBank.entities.Conto;
+import com.example.littleBank.exceptions.ClienteNotFoundException;
 import com.example.littleBank.request.CreateContoRequest;
 import com.example.littleBank.response.GetClienteResponse;
 import com.example.littleBank.services.ClienteService;
@@ -20,7 +21,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping("/get/{id}")
-    public GetClienteResponse getClienteById(@PathVariable Long id) {
+    public GetClienteResponse getClienteById(@PathVariable Long id) throws ClienteNotFoundException {
         return clienteService.getClienteById(id);
     }
 

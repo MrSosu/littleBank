@@ -18,12 +18,9 @@ public class ContoController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getContoById(@PathVariable Long id) {
-        try {
             Conto myConto = contoService.getContoById(id);
             return new ResponseEntity<>(myConto, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
     }
 
     @GetMapping("/all")
