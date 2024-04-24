@@ -1,6 +1,7 @@
 package com.example.littleBank.services;
 
 import com.example.littleBank.entities.Conto;
+import com.example.littleBank.entities.Transazione;
 import com.example.littleBank.repositories.ContoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,15 @@ public class ContoService {
 
     public void deleteContoById(Long id) {
         contoRepository.deleteById(id);
+    }
+
+    public void updateContoAfterTransazione(Transazione transazione) {
+        Conto contoMittente = transazione.getMittente();
+        Conto contoDestinatario = transazione.getDestinatario();
+        contoMittente.setCash(contoMittente.getCash() - transazione.getCash());
+        contoDestinatario.setCash(contoDestinatario.getCash() + transazione.getCash());
+        contoRepository.saveAndFlush(contoMittente);
+        contoRepository.saveAndFlush(contoDestinatario);
     }
 
 }

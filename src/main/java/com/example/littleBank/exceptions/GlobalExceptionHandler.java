@@ -26,4 +26,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(NonciainaliraException.class)
+    public ResponseEntity<ErrorResponse> handleNonciainaliraException(NonciainaliraException e) {
+        ErrorResponse errorResponse = new ErrorResponse("NonciainaliraException", e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
