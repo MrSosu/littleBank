@@ -1,6 +1,5 @@
 package com.example.littleBank.services;
 
-import com.example.littleBank.entities.Cliente;
 import com.example.littleBank.entities.Conto;
 import com.example.littleBank.entities.Transazione;
 import com.example.littleBank.exceptions.NonciainaliraException;
