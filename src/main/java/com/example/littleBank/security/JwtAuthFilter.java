@@ -1,5 +1,10 @@
 package com.example.littleBank.security;
 
+import com.example.littleBank.entities.Cliente;
+import com.example.littleBank.repositories.ClienteRepository;
+import com.example.littleBank.repositories.TokenBlackListRepository;
+import com.example.littleBank.services.ClienteService;
+import com.example.littleBank.services.TokenBlackListService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +29,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private TokenBlackListService tokenBlackListService;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
 
     @Override
@@ -37,6 +46,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
+        Cliente cliente = clienteRepository.findClienteByEmail(userEmail);
+        if (tokenBlackListService.tokenNotValidFromClienteById(cliente.getId()).contains(jwt)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt)) {
