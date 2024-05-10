@@ -24,4 +24,8 @@ public class TokenBlackListService {
         tokenBlackListRepository.saveAndFlush(tokenBlackList);
     }
 
+    public Boolean isTokenPresent(String token) {
+        return tokenBlackListRepository.findAll().stream().map(TokenBlackList::getToken).toList().contains(token);
+    }
+
 }

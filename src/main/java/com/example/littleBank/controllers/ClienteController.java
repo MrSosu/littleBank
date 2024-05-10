@@ -9,6 +9,7 @@ import com.example.littleBank.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,5 +55,11 @@ public class ClienteController {
         }
     }
 
+    @PutMapping("/update/role")
+    @Secured("SUPERADMIN")
+    public ResponseEntity<String> updateRole(@RequestParam Long id, @RequestParam String new_role) throws ClienteNotFoundException {
+        clienteService.updateRole(id, new_role);
+        return new ResponseEntity<>("Ruolo aggiornato con successo", HttpStatus.CREATED);
+    }
 
 }

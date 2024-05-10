@@ -2,6 +2,7 @@ package com.example.littleBank.services;
 
 import com.example.littleBank.entities.Cliente;
 import com.example.littleBank.entities.Conto;
+import com.example.littleBank.enums.Role;
 import com.example.littleBank.exceptions.ClienteNotFoundException;
 import com.example.littleBank.repositories.ClienteRepository;
 import com.example.littleBank.request.CreateContoRequest;
@@ -93,6 +94,12 @@ public class ClienteService {
                 .id_clienti(createContoRequest.getClienti())
                 .build();
         return createContoResponse;
+    }
+
+    public void updateRole(Long id, String new_role) throws ClienteNotFoundException {
+        Cliente cliente = clienteRepository.getReferenceById(id);
+        cliente.setRole(Role.valueOf(new_role));
+        clienteRepository.saveAndFlush(cliente);
     }
 
     public List<TransazioneResponse> getAllTransazioniByContoId(Long idConto) {

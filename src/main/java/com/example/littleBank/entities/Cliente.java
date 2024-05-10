@@ -1,8 +1,10 @@
 package com.example.littleBank.entities;
 
+import com.example.littleBank.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -41,13 +43,16 @@ public class Cliente implements UserDetails {
     private String password;
     @Column(nullable = false)
     private String registrationToken;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clientiConto")
     private List<Conto> contiUtente;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

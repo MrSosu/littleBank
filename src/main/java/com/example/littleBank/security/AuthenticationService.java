@@ -2,6 +2,7 @@ package com.example.littleBank.security;
 
 import com.example.littleBank.entities.Cliente;
 import com.example.littleBank.entities.TokenBlackList;
+import com.example.littleBank.enums.Role;
 import com.example.littleBank.repositories.ClienteRepository;
 import com.example.littleBank.request.AuthenticationRequest;
 import com.example.littleBank.request.RegistrationRequest;
@@ -41,6 +42,7 @@ public class AuthenticationService {
                 .dataNascita(request.getDataNascita())
                 .telefono(request.getTelefono())
                 .email(request.getEmail())
+                .role(Role.USER)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
         var jwtToken = jwtService.generateToken(user);
