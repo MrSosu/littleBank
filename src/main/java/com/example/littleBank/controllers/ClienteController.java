@@ -27,6 +27,7 @@ public class ClienteController {
     }
 
     @GetMapping("/all")
+    @Secured("ADMIN")
     public List<GetClienteResponse> getAllClienti() {
         return clienteService.getAll();
     }
