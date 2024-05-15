@@ -39,7 +39,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**", "/auth/register/**", "/auth/login/**")
+                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**", "/auth/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -55,7 +55,7 @@ public class SecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         var hierarchy = new RoleHierarchyImpl();
-        hierarchy.setHierarchy("ROLE_SUPERADMIN > ROLE_ADMIN > ROLE_USER");
+        hierarchy.setHierarchy("ROLE_SUPERADMIN > ROLE_ADMIN > ROLE_USER > ROLE_TOCONFIRM");
         return hierarchy;
     }
 
