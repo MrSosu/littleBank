@@ -35,8 +35,6 @@ public class BankNewsController {
         return new ResponseEntity<>(bankNewsService.createBankNews(bankNews), HttpStatus.CREATED);
     }
 
-    public ResponseEntity<ScheduledBankNewsRequest> createScheduledNews(@RequestBody ScheduledBankNewsRequest request) throws SchedulerException {
-        return new ResponseEntity<>(bankNewsService.createScheduledBankNews(request), HttpStatus.CREATED);
-    }
+
 
 }

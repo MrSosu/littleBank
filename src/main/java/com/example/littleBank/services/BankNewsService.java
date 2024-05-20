@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BankNewsService implements Job {
+public class BankNewsService {
 
     @Autowired
     private BankNewsRepository bankNewsRepository;
@@ -35,36 +35,5 @@ public class BankNewsService implements Job {
         return bankNews;
     }
 
-    public ScheduledBankNewsRequest createScheduledBankNews(ScheduledBankNewsRequest request) throws SchedulerException {
-        BankNews bankNews = BankNews.builder().title(request.getTitle()).body(request.getBody()).build();
-        JobDetail jobDetail = buildJobDetail(bankNews);
-        Trigger trigger = buildJobTrigger(jobDetail, request.getTargetDate());
-        scheduler.scheduleJob(jobDetail, trigger);
-        return request;
-    }
 
-    private JobDetail buildJobDetail(BankNews bankNews) {
-        JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("entity", bankNews);
-        return JobBuilder.newJob()
-                .storeDurably()
-                .setJobData(jobDataMap)
-                .build();
-    }
-
-    private Trigger buildJobTrigger(JobDetail jobDetail, Date targetDate) {
-        return TriggerBuilder.newTrigger()
-                .forJob(jobDetail)
-                .startAt(targetDate)
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule())
-                .build();
-    }
-
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
-        BankNews bankNews = (BankNews) jobDataMap.get("entity");
-        createBankNews(bankNews);
-        System.out.println("News inserita con successo!");
-    }
 }
