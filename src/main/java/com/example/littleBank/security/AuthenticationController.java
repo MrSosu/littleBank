@@ -35,10 +35,7 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping("/logout/{id}")
-    public void logout(HttpServletRequest httpRequest, @PathVariable Long id) {
-        authenticationService.logout(httpRequest, id);
-    }
+
 
     @GetMapping("/confirm")
     public ResponseEntity<?> confirmRegistration(@RequestParam Long id, @RequestParam String token) {

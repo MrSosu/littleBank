@@ -5,7 +5,9 @@ import com.example.littleBank.entities.Conto;
 import com.example.littleBank.exceptions.ClienteNotFoundException;
 import com.example.littleBank.request.CreateContoRequest;
 import com.example.littleBank.response.GetClienteResponse;
+import com.example.littleBank.security.AuthenticationService;
 import com.example.littleBank.services.ClienteService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @GetMapping("/get/{id}")
     public GetClienteResponse getClienteById(@PathVariable Long id) throws ClienteNotFoundException {
@@ -61,6 +65,11 @@ public class ClienteController {
     public ResponseEntity<String> updateRole(@RequestParam Long id, @RequestParam String new_role) throws ClienteNotFoundException {
         clienteService.updateRole(id, new_role);
         return new ResponseEntity<>("Ruolo aggiornato con successo", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/logout/{id}")
+    public void logout(HttpServletRequest httpRequest, @PathVariable Long id) {
+        authenticationService.logout(httpRequest, id);
     }
 
 }

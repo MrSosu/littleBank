@@ -3,6 +3,8 @@ package com.example.littleBank.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table
 @Getter
@@ -19,5 +21,9 @@ public class TokenBlackList {
     private String token;
     @ManyToOne
     private Cliente cliente;
+    @Column
+    private LocalDateTime insertTime;
+    @Column
+    private LocalDateTime lastUpdate;
 
 }

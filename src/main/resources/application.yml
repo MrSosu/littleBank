@@ -1,4 +1,13 @@
 spring:
+  quartz:
+    job-store-type: memory
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: MyScheduler
+            instanceId: AUTO
+
   datasource:
     url: "jdbc:mysql://localhost:3306/littlebank"
     username: "root"
