@@ -67,7 +67,7 @@ public class TokenBlackListService {
                 .forJob(jobDetail)
                 .startAt(targetDate)
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInSeconds(5)
+                        .withIntervalInSeconds(5000000)
                         .repeatForever())
                 .build();
     }

@@ -2,6 +2,7 @@ package com.example.littleBank.security;
 
 import com.example.littleBank.exceptions.UserNotConformedException;
 import com.example.littleBank.request.AuthenticationRequest;
+import com.example.littleBank.request.ChangePwRequest;
 import com.example.littleBank.request.RegistrationRequest;
 import com.example.littleBank.response.AuthenticationResponse;
 import com.example.littleBank.response.ErrorResponse;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +21,8 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegistrationRequest request) {
@@ -35,14 +39,19 @@ public class AuthenticationController {
 
     }
 
-
-
     @GetMapping("/confirm")
     public ResponseEntity<?> confirmRegistration(@RequestParam Long id, @RequestParam String token) {
         if (authenticationService.confirmRegistration(id, token)) {
             return new ResponseEntity<>(new GenericResponse("conferma avvenuta con successo!"), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ErrorResponse("NotConfirmedException", "OPS! Qualcosa è andato storto con la conferma del tuo account!"), HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/roba")
+    public void roba() {
+        System.out.println(passwordEncoder.encode("password"));
+        System.out.println(passwordEncoder.encode("password"));
+        System.out.println(passwordEncoder.encode("password"));
     }
 
 }

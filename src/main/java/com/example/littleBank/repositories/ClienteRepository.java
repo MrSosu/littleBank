@@ -12,4 +12,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query(value = "SELECT * FROM cliente c WHERE c.email = :email", nativeQuery = true)
     Cliente findClienteByEmail(@Param("email") String email);
 
+    @Query(value = "SELECT documento FROM cliente WHERE id =:id_cliente", nativeQuery = true)
+    String getFilePath(@Param("id_cliente") Long id_cliente);
+
 }

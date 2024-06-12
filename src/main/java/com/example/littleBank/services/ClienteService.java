@@ -145,4 +145,13 @@ public class ClienteService {
     }
 
 
+    public void uploadDocumento(Long id, String path) throws ClienteNotFoundException {
+        Cliente cliente = clienteRepository.getReferenceById(id);
+        cliente.setDocumento(path);
+        clienteRepository.saveAndFlush(cliente);
+    }
+
+    public String getPath(Long id) {
+        return clienteRepository.getFilePath(id);
+    }
 }

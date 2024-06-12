@@ -48,6 +48,8 @@ public class Cliente implements UserDetails {
     private Role role;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clientiConto")
     private List<Conto> contiUtente;
+    @Column
+    private String documento;
 
 
     @Override
