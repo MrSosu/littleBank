@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -153,5 +154,15 @@ public class ClienteService {
 
     public String getPath(Long id) {
         return clienteRepository.getFilePath(id);
+    }
+
+    public Cliente findByEmail(String email) {
+        return clienteRepository.findClienteByEmail(email);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clienteRepository, contoService);
     }
 }

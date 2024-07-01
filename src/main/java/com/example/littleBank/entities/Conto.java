@@ -6,6 +6,7 @@ import org.hibernate.annotations.Check;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -35,4 +36,16 @@ public class Conto {
     )
     private List<Cliente> clientiConto;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Conto conto = (Conto) o;
+        return Objects.equals(id, conto.id) && Objects.equals(costo, conto.costo) && Objects.equals(cash, conto.cash) && Objects.equals(dataConto, conto.dataConto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, costo, cash, dataConto);
+    }
 }

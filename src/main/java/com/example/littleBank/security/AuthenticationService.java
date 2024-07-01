@@ -47,13 +47,13 @@ public class AuthenticationService {
                 .dataNascita(request.getDataNascita())
                 .telefono(request.getTelefono())
                 .email(request.getEmail())
-                .role(Role.TOCONFIRM)
+                .role(Role.USER)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
         var jwtToken = jwtService.generateToken(user);
         user.setRegistrationToken(jwtToken);
         clienteRepository.saveAndFlush(user);
-        javaMailSender.send(createConfirmationMail(user));
+       // javaMailSender.send(createConfirmationMail(user));
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
